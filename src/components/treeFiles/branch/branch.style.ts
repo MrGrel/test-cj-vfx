@@ -9,7 +9,7 @@ export const BtnAddContainer = styled.div`
 export const TypesList = styled.ul`
   position: absolute;
   top: 20px;
-  right: -84px;
+  right: -50px;
   max-width: 163px;
   width: 2000%;
   margin: 0;

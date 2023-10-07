@@ -5,9 +5,13 @@ export const Modal = styled.div`
   text-align: center;
   max-width: 523px;
   width: 100%;
-  padding: 137px 15px 12px;
+  padding: 44px 15px 12px;
   background: #232323;
   border: 1px solid #333;
+
+  & svg {
+    margin-bottom: 42px;
+  }
 `;
 
 export const ModalPath = styled.p`

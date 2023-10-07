@@ -43,7 +43,7 @@ class treeStructure {
           id: 5,
           parentId: 4,
           name: "test5",
-          path: "PROJECT",
+          path: "PROJECT/test5",
           type: "Folder",
           childrens: [],
         },

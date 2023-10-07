@@ -20,6 +20,7 @@ import { IBranch } from "../../../type/branch";
 import { observer } from "mobx-react-lite";
 import { AddBtn } from "./addBtn";
 import dataRmModal from "../../../store/dataRmModal";
+import activeElement from "../../../store/activeElement";
 
 interface IFunBranch {
   currentItem: IBranch;
@@ -29,25 +30,12 @@ interface IFunBranch {
 export const Branch = observer(({ currentItem }: IFunBranch) => {
   const { id, parentId, name, type, path, childrens } = currentItem;
 
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const isActive = id === activeElement.activeId;
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handleClickOnElement = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    e.stopPropagation();
-
-    if (e.target === e.currentTarget) {
-      setIsOpen((prev) => !prev);
-    }
-
-    if (e.target === e.currentTarget && !isActive) {
-      setIsActive(true);
-    }
-
-    if (isActive && e.target !== e.currentTarget) {
-      setIsActive(true);
-    }
+  const handleClickOnElement = () => {
+    activeElement.setActiveId(id);
+    setIsOpen((prev) => !prev);
   };
 
   const handleClickRm = () => {
@@ -56,19 +44,25 @@ export const Branch = observer(({ currentItem }: IFunBranch) => {
 
   return (
     <>
-      <DescContainer onClick={(e) => handleClickOnElement(e)}>
-        <BtnOpen>{shapeSvg}</BtnOpen>
+      <DescContainer
+        isActive={isActive}
+        type={type}
+        onClick={handleClickOnElement}
+      >
+        {type === "Folder" && <BtnOpen isOpen={isOpen}>{shapeSvg}</BtnOpen>}
         <NameContainer>
           {type === "Folder" ? folderSvg : sequenceSvg}
           <Name>{name}</Name>
         </NameContainer>
-        <BtnsContainer>
-          {type === "Folder" && <AddBtn id={id} name={name} path={path} />}
-          <Btn onClick={handleClickRm}>{removeSvg}</Btn>
-        </BtnsContainer>
+        {isActive && (
+          <BtnsContainer>
+            {type === "Folder" && <AddBtn id={id} name={name} path={path} />}
+            <Btn onClick={handleClickRm}>{removeSvg}</Btn>
+          </BtnsContainer>
+        )}
       </DescContainer>
       {childrens && childrens.length && (
-        <List>
+        <List isOpen={isOpen}>
           {childrens.map((item) => (
             <Item key={String(item.id) + item.name}>
               <Branch

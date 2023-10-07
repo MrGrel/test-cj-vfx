@@ -1,3 +1,4 @@
+import { bigRmSvg } from "../../../assets/svg";
 import dataRmModal from "../../../store/dataRmModal";
 import treeStructure from "../../../store/treeStructure";
 import { ModalContainer } from "../modalContainer.styles";
@@ -39,6 +40,7 @@ export const ModalRm = () => {
   return (
     <ModalContainer onClick={(e) => handleClickContainer(e)}>
       <Modal>
+        {bigRmSvg}
         <ModalPath>{dataRmModal.path}</ModalPath>
         <ModalText>Are you sure you want to delete this Sequence?</ModalText>
         <Wrapper>

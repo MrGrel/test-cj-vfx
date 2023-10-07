@@ -1,4 +1,15 @@
 import styled from "@emotion/styled";
+import { TTypeBranch } from "../../type/branch";
+import IMG from "../../assets/IMG";
+
+interface IActive {
+  isActive: boolean;
+  type: TTypeBranch;
+}
+
+interface IOpened {
+  isOpen: boolean;
+}
 
 export const TreeFilesContainer = styled.div`
   max-width: 380px;
@@ -7,7 +18,8 @@ export const TreeFilesContainer = styled.div`
   background: #232323;
 `;
 
-export const List = styled.ul`
+export const List = styled.ul<IOpened>`
+  display: ${(props) => (props.isOpen ? "block" : "none")};
   width: 100%;
   padding-left: 9px;
 `;
@@ -16,16 +28,26 @@ export const Item = styled.li`
   width: 100%;
 `;
 
-export const DescContainer = styled.div`
+export const DescContainer = styled.div<IActive>`
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 8px 14px 8px 20px;
+  padding: 8px 20px 8px
+    ${(props) => (props.type === "Folder" ? "14px" : "44px")};
+
+  background-color: ${(props) => (props.isActive ? "#343434" : "inherit")};
+
+  background-image: ${(props) => (!!props.isActive ? IMG.yellowLine : "none")};
+
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: cover;
   border-radius: 3px;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
 `;
 
-export const BtnOpen = styled.button`
+export const BtnOpen = styled.button<IOpened>`
   position: relative;
   width: 14px;
   height: 14px;
@@ -35,6 +57,8 @@ export const BtnOpen = styled.button`
   border: none;
   border-radius: 3px;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  transform: ${(props) => (!!props.isOpen ? " rotate(90deg)" : "none")};
 
   & svg {
     position: absolute;
@@ -77,7 +101,7 @@ export const Btn = styled.button`
   margin: 0;
   padding: 0;
   background: inherit;
-  border: 1px solid inherit;
+  border: 1px solid #343434;
   border-radius: 3px;
   cursor: pointer;
 
