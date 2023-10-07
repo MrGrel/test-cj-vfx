@@ -3,17 +3,20 @@ import {
   Item,
   TreeFilesContainer,
 } from "../components/treeFiles/TreeFiles.styled";
-import { Folder } from "../components/treeFiles/folder/folder";
+import { Branch } from "../components/treeFiles/branch/branch";
+import treeStructure from "../store/treeStructure";
 
 export const TreeFiles = () => {
-  const nok = { type: "folder", name: "test", path: "", id: 1 };
-
+  const { tree } = treeStructure;
   return (
     <TreeFilesContainer>
       <List>
-        <Item>
-          <Folder id={1} type="folder" path="" name="test"></Folder>
-        </Item>
+        {tree.length &&
+          tree.map((item, index) => (
+            <Item key={String(item.id) + item.name}>
+              <Branch currentItem={item} path={item.path} />
+            </Item>
+          ))}
       </List>
     </TreeFilesContainer>
   );

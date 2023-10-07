@@ -1,13 +1,21 @@
+import { observer } from "mobx-react-lite";
+import { Container } from "./components/container/container.style";
+import { ModalAdd } from "./components/modals/modalAdd/modalAdd";
+import { ModalRm } from "./components/modals/modalRm/modalRm";
 import { DisplaingFiles } from "./pages/displingFile";
 import { TreeFiles } from "./pages/treeFiles";
+import dataAddModal from "./store/dataAddModal";
+import dataRmModal from "./store/dataRmModal";
 
-function App() {
+const App = observer(() => {
   return (
-    <div className="App">
+    <Container>
       <TreeFiles></TreeFiles>
       <DisplaingFiles></DisplaingFiles>
-    </div>
+      {dataAddModal.isOpenAddModal && <ModalAdd />}
+      {dataRmModal.isOpenRmModal && <ModalRm />}
+    </Container>
   );
-}
+});
 
 export default App;
